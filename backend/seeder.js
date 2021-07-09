@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const users = require("./data/users");
 const products = require("./data/products");
@@ -43,8 +42,9 @@ const destoryData = async () => {
     process.exit(1);
   }
 };
-if(process.argv[2] === '-d') {
-    destoryData();
+
+if (process.argv[2] === "-d") {
+  destoryData();
 } else {
-    importData();
+  importData();
 }
