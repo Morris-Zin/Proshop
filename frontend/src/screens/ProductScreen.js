@@ -17,7 +17,7 @@ const ProductScreen = ({ match }) => {
 
   
   return (
-    <>
+    <React.Fragment>
       <Link className="btn btn-light my-3" to="/">
         Go back
       </Link>
@@ -72,7 +72,7 @@ const ProductScreen = ({ match }) => {
           </Card>
         </Col>
       </Row>
-    </>
+    </React.Fragment>
   );
 };
 
