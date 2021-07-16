@@ -12,10 +12,16 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
           cartItems: state.cartItems.map((x) =>
             x.product === existItem.product ? item : x
           ),
-        };  
+        };
       } else {
         return { ...state, cartItems: [...state.cartItems, item] };
       }
+    case CART_REMOVE_ITEM:
+    
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((item) => item.product !== action.id),
+      };
     default:
       return state;
   }
