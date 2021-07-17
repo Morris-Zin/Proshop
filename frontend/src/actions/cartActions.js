@@ -9,7 +9,7 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       product: data._id,
       name: data.name,
       image: data.image,
-      price: data.price,
+      price: data.price, 
       countInStock: data.countInStock,
       qty,
     },
@@ -20,7 +20,7 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
 
 export const removeFromCart = (id) => async (dispatch, getState) => {
   dispatch({
-    type: CART_REMOVE_ITEM,
+    type: CART_REMOVE_ITEM,     
     id,
   });
 
