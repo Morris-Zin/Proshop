@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { createOrder } from "../actions/orderActions";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 
-const PlaceOrderScreen = () => {
+const PlaceOrderScreen = ({history}) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const placeOrderHandler = () => {};
+  const {order,success,error} = useSelector(state => state.orderCreate); 
+
+  useEffect(() => {
+    if(success) {
+      history.push(`/order/${order._id}`)
+    }
+  },[history,success])
+
+  const placeOrderHandler = () => {
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
 
   cart.itemsPrice = cart.cartItems.reduce((total, current) => {
     return total + current.price * current.qty;
@@ -17,8 +38,8 @@ const PlaceOrderScreen = () => {
   cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100;
 
   cart.taxPrice = +Math.round((0.15 * cart.itemsPrice).toFixed(2));
-  
-  cart.totalPrice = +cart.itemsPrice + +cart.shippingPrice + +cart.taxPrice
+
+  cart.totalPrice = +cart.itemsPrice + +cart.shippingPrice + +cart.taxPrice;
 
   return (
     <div>
@@ -107,6 +128,9 @@ const PlaceOrderScreen = () => {
                   <Col>Total</Col>
                   <Col>Kyats {cart.totalPrice}</Col>
                 </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
