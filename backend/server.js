@@ -15,6 +15,9 @@ connectDB();
 app.use(express.json());
 
 app.get("/", (req, res) => res.send("Api is alive"));
+app.get("/api/config/paypal", (req, res) =>
+  res.send(process.env.PAYPAY_CLIENT_ID)
+);
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);

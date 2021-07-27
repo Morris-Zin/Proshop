@@ -46,7 +46,7 @@ const orderSchema = new Schema(
       required: true,
       default: false,
     },
-    paymentResult: {
+    paymentResults: {
       id: {
         type: String,
       },
